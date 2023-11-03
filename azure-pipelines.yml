@@ -49,9 +49,9 @@ jobs:
       configFilePath: ./gitversion.yml
   - script: |
       echo $(GitVersion.NugetVersionV2)
-  - script: |
-      git tag $(GitVersion.NugetVersionV2)
-      git push origin $(GitVersion.NugetVersionV2)
-    workingDirectory: $(Build.SourcesDirectory)
+#  - script: |
+#      git tag $(GitVersion.NugetVersionV2)
+#      git push origin $(GitVersion.NugetVersionV2)
+#    workingDirectory: $(Build.SourcesDirectory)
 
 
