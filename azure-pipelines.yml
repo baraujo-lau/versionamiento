@@ -53,5 +53,3 @@ jobs:
 #      git tag $(GitVersion.NugetVersionV2)
 #      git push origin $(GitVersion.NugetVersionV2)
 #    workingDirectory: $(Build.SourcesDirectory)
-
-
