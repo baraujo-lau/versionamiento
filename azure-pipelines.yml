@@ -1,0 +1,57 @@
+trigger:
+- main
+
+variables:
+  GitVersion.SemVer: ''
+
+pool:
+  vmImage: 'ubuntu-latest'  # You can choose a different agent pool based on your requirements.
+
+jobs:
+- job: BuildAndTest
+  # steps:
+  #   - checkout: self
+  #     fetchDepth: 0
+  #   - task: gitversion/setup@0
+  #     displayName: Install GitVersion
+  #     inputs:
+  #       versionSpec: "5.10.x"
+    
+  #   - task: gitversion/execute@0
+  #     displayName: Determine Version
+  #     inputs:
+  #       useConfigFile: true
+  #       configFilePath: ./gitversion.yml
+
+
+
+    # fetchDepth: 0
+
+    
+  # - task: gitversion/execute@0
+  #   displayName: gitversion
+  #   inputs:
+  #     versionSpec: '5.x'
+  #     updateAssemblyInfo: true
+
+  steps:
+  - checkout: self
+    persistCredentials: true
+    fetchDepth: 0
+  - task: gitversion/setup@0
+    displayName: Install GitVersion
+    inputs:
+      versionSpec: "5.x"
+  - task: gitversion/execute@0
+    displayName: gitversion
+    inputs:
+      useConfigFile: true
+      configFilePath: ./gitversion.yml
+  - script: |
+      echo $(GitVersion.NugetVersionV2)
+  - script: |
+      git tag $(GitVersion.NugetVersionV2)
+      git push origin $(GitVersion.NugetVersionV2)
+    workingDirectory: $(Build.SourcesDirectory)
+
+
